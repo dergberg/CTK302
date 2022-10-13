@@ -72,7 +72,7 @@ function draw() {
       text("Ask Mitch about literally any issue", 10, 250);
       
       vol = mic.getLevel();
-      if (vol >= 0.1) {
+      if (vol >= 0.15) {
 
         myState = 2;
         gam.play();
