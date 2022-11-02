@@ -6,6 +6,7 @@ let i1,i2,i3,i4,i5, i6;
 let zucks = [];
 let x= 0;
 let s1, s2, s3;
+let f1;
 
 function preload (){
   i1= loadImage ("assets/modifiedlich.png");
@@ -17,6 +18,7 @@ function preload (){
   s1= loadSound ("assets/coinsound.wav");
   s2= loadSound ("assets/youlose.wav");
   s3= loadSound ("assets/youwin.wav");
+  f1= loadFont ("assets/BLUECHERIES.ttf")
 }
 
 function setup() {
@@ -45,13 +47,15 @@ function draw() {
       background (i5, 900, 900);
       fill(random(255), random(255), random(255));
       textSize(30);
+      textFont (f1);
       text("Click to Begin", x, 200);
       x += 3;
       if (x > 900) {
         x = 0;
       }
-      fill("black");
-      text("Collect the ZuckBucks to win a prize!", width/2-250, height/2);
+      textSize (50);
+      fill("purple");
+      text("Collect the ZuckBucks to win a prize!", width/2-380, height/2);
       break;
 
     case 1: // game screen
@@ -60,7 +64,7 @@ function draw() {
       fill ("black");
       text(timer,width / 2, height / 2);
       text("Timer:", width/2-160, height/2);
-      text("Zucks:", width/2-160, height/2+80);
+      text( "Zucks:", width/2-160, height/2+80);
        
   if (frameCount % 60 == 0 && timer > 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
     timer --;
@@ -74,10 +78,12 @@ function draw() {
 
     case 2: // win screen
       background(100);
+      push();
       imageMode (CENTER);
       image (i4, width/2, height/2);
-      fill("white");
-      textSize(30);
+      pop();
+      fill("purple");
+      textSize(50);
       text("Enjoy your new Mark Zuckerboat!", width / 2 -300, height / 2);
 
       break;
@@ -137,6 +143,7 @@ function game() {
      
   }
   if (zucks.length ==0){
+    s3.play();
     state = 2;
    }
    fill ("black");
@@ -159,7 +166,9 @@ function resetTheGame() {
   cars = [];
   zucks = [];
   timer = 15;
-  imageMode ();
+  s3.stop();
+  frogPos = createVector(width / 2, height - 80);
+  
   image(i3,frogPos.x, frogPos.y, 105, 105);
   for (let i = 0; i < 20; i++) {
     cars.push(new Car());
@@ -205,7 +214,7 @@ class Car {
 }
 class Zucks {
   constructor() {
-  this.pos = createVector(random(width), 100); // initialize your attributes here
+  this.pos = createVector(random(width-75), 100); // initialize your attributes here
   this.velocity = createVector(0, random(3));
   this.r = random(255);
   this.g = random(255);
